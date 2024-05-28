@@ -1,7 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
-import news.headlines.configureBadgingTasks
 import news.headlines.configureKotlinAndroid
 import news.headlines.configurePrintApksTask
 import org.gradle.api.Plugin
@@ -23,7 +22,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
             extensions.configure<ApplicationAndroidComponentsExtension> {
                 configurePrintApksTask(this)
-                configureBadgingTasks(extensions.getByType<BaseExtension>(), this)
             }
         }
     }

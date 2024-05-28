@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.presentation.launchpad)
+
+    implementation(projects.core.designsystem)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
