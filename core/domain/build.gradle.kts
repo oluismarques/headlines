@@ -10,6 +10,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.util)
 
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)

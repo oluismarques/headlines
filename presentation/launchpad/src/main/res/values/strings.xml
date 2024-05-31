@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">launchpad</string>
+    <string name="top_headlines_top_bar_title">Top Headlines</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="top_headlines_empty_results">No results to show</string>
+    <string name="top_headlines_error_message">Something went wrong</string>
+
 </resources>

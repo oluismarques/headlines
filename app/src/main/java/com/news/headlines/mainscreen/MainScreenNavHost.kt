@@ -10,7 +10,7 @@ import com.news.launchpad.launchpadScreenGraph
 @Composable
 fun MainScreenNavHost(
     navController: NavHostController,
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (String) -> Unit,
 ) {
     NavHost(
         navController = navController,
