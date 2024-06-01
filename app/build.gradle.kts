@@ -43,8 +43,11 @@ android {
 dependencies {
     implementation(projects.presentation.launchpad)
 
+    implementation(projects.core.domain)
     implementation(projects.core.designsystem)
+    implementation(projects.core.data)
 
+    implementation(libs.coil.kt)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

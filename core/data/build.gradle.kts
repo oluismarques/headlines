@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.news.android.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
+
 android {
     namespace = "com.news.core.data"
 
@@ -13,7 +14,7 @@ android {
             buildConfigField(
                 "String",
                 "BaseUrl",
-                "\"http://newsapi.org/\""
+                "\"http://newsapi.org/v2/\""
             )
             buildConfigField(
                 "String",
@@ -25,7 +26,7 @@ android {
             buildConfigField(
                 "String",
                 "BaseUrl",
-                "\"http://newsapi.org/\""
+                "\"http://newsapi.org/v2/\""
             )
 
             buildConfigField(
@@ -47,6 +48,7 @@ android {
 
 dependencies {
     implementation(projects.core.domain)
+    implementation(projects.core.util)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.okhttp.logging)
@@ -54,11 +56,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.svg)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.kotlinx.serialization.json)
-
 }
 
 fun getProperty(filename: String, propName: String): String? {

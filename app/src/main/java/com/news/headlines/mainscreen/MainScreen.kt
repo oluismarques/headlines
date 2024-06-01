@@ -46,7 +46,7 @@ data class BottomNavItem(
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (String) -> Unit,
 ) {
     Scaffold(
         bottomBar = {
