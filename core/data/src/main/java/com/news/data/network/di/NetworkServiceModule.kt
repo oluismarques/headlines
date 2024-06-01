@@ -1,4 +1,4 @@
-package com.swapi.tmdb.data.network.di
+package com.news.data.network.di
 
 import com.news.data.network.service.HeadlinesService
 import dagger.Module
