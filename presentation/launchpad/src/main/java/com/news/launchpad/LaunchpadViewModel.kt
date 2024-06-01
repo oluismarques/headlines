@@ -1,5 +1,6 @@
 package com.news.launchpad
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.news.domain.headlines.HeadlinesRepository
@@ -10,29 +11,65 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class LaunchpadViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val headlinesRepository: HeadlinesRepository,
 ) : ViewModel() {
 
-    val launchpadUiState: StateFlow<LaunchpadResultUiState> =
-        MutableStateFlow<LaunchpadResultUiState>(LaunchpadResultUiState.Loading)
+    val launchpadUiState = savedStateHandle.getStateFlow<LaunchpadResultUiState>(
+        key = KEY_STATE,
+        initialValue = LaunchpadResultUiState.Loading
+    )
+
 
     init {
         getTopHeadlines()
     }
 
     private fun getTopHeadlines() {
-        headlinesRepository.getTopHeadlines() .onEach { result ->
+        headlinesRepository.getTopHeadlines().onEach { result ->
             when (result) {
-                is Resource.Error -> launchpadUiState.asMutable().emit(LaunchpadResultUiState.Error)
-                Resource.Loading -> launchpadUiState.asMutable().emit(LaunchpadResultUiState.Loading)
-                is Resource.Success -> if (result.data.isNotEmpty()) launchpadUiState.asMutable()
-                    .emit(LaunchpadResultUiState.Success(result.data))
+                is Resource.Error -> setState(LaunchpadResultUiState.Error)
+                Resource.Loading -> setState(LaunchpadResultUiState.Loading)
+                is Resource.Success -> if (result.data.isNotEmpty()) setState(
+                    LaunchpadResultUiState.Success(
+                        result.data
+                    )
+                )
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun sorterDate(sorterDate: SorterDate) {
+        viewModelScope.launch {
+            if (getState() is LaunchpadResultUiState.Success) {
+                val result = getState() as LaunchpadResultUiState.Success
+               val sortedList=  if (sorterDate == SorterDate.ASC) {
+                    result.topHeadlines.sortedBy { it.publishedAt }
+                } else {
+                    result.topHeadlines.sortedByDescending {
+                        it.publishedAt
+                    }
+                }
+                setState(LaunchpadResultUiState.Success(sortedList))
+            }
+        }
+    }
+
+    private fun setState(launchpadResultUiState: LaunchpadResultUiState) {
+        savedStateHandle[KEY_STATE] = launchpadResultUiState
+    }
+
+    private fun getState(): LaunchpadResultUiState =
+        savedStateHandle[KEY_STATE] ?: LaunchpadResultUiState.Loading
+
+
+    companion object {
+        private const val KEY_STATE = "state"
     }
 
 }

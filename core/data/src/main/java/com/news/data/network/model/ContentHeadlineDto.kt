@@ -5,6 +5,8 @@ import com.news.domain.headlines.Source
 import com.news.domain.headlines.TopHeadline
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Serializable
 internal data class ContentHeadlineResponse(
@@ -38,9 +40,18 @@ internal fun ContentHeadlineResponse.asDomainModel(): TopHeadline =
         description = description.orEmpty(),
         url = url.orEmpty(),
         urlToImage = urlToImage,
-        publishedAt = publishedAt,
+        publishedAt = formatDate(publishedAt),
         source = sourceHeadlineResponse.asDomainModel()
     )
+
+private fun formatDate(date: String): String {
+    val zonedDateTime = ZonedDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
+
+    val timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    val formattedTime = zonedDateTime.format(timeFormatter)
+
+    return formattedTime
+}
 
 private fun SourceHeadlineResponse.asDomainModel(): Source =
     Source(

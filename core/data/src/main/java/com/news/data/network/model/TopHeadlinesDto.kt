@@ -16,4 +16,4 @@ internal data class TopHeadlinesResponse(
 
 internal fun List<ContentHeadlineResponse>.asDomainModel() = map {
     it.asDomainModel()
-}
+}.sortedBy { it.publishedAt }

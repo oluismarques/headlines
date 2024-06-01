@@ -18,7 +18,8 @@ fun NavGraphBuilder.launchpadScreenGraph(
 
         LaunchPadScreen(
             launchpadResultUiState = launchpadResultUiState,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
+            onSorterDate = viewModel::sorterDate,
         )
     }
 }
