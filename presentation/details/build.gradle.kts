@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.news.feature.launchpad"
+    namespace = "com.news.feature.details"
 
     testOptions {
         unitTests {

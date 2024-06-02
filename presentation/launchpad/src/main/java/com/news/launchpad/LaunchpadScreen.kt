@@ -32,7 +32,7 @@ import com.news.designsystem.theme.DSGray50
 import com.news.designsystem.theme.Dimen12
 import com.news.designsystem.theme.Dimen8
 import com.news.domain.headlines.Source
-import com.news.domain.headlines.TopHeadline
+import com.news.domain.headlines.TopHeadlineItem
 import com.news.feature.launchpad.R
 
 
@@ -40,7 +40,7 @@ import com.news.feature.launchpad.R
 internal fun LaunchPadScreen(
     launchpadResultUiState: LaunchpadResultUiState,
     onSorterDate: (SorterDate) -> Unit,
-    navigateToDetail: (String) -> Unit,
+    navigateToDetail: (TopHeadlineItem) -> Unit,
 ) {
     Column {
         DSTopBar(
@@ -60,7 +60,7 @@ internal fun LaunchPadScreen(
 @Composable
 private fun NewsCollection(
     uiState: LaunchpadResultUiState,
-    navigateToDetail: (String) -> Unit,
+    navigateToDetail: (TopHeadlineItem) -> Unit,
     onSorterDate: (SorterDate) -> Unit,
 ) {
     Column(
@@ -112,10 +112,10 @@ private fun NewsCollection(
             is LaunchpadResultUiState.Success -> {
                 TopHeadlineList(
                     modifier = Modifier.wrapContentHeight(),
-                    topHeadlines = uiState.topHeadlines,
+                    topHeadlineItems = uiState.topHeadlineItems,
                     onSorterDate = onSorterDate,
                     onNewsClick = {
-                        it.source.id?.let { navigateToDetail.invoke(it) }
+                        navigateToDetail.invoke(it) 
                     })
             }
         }
@@ -124,8 +124,8 @@ private fun NewsCollection(
 
 @Composable
 private fun TopHeadlineList(
-    topHeadlines: List<TopHeadline>,
-    onNewsClick: (TopHeadline) -> Unit,
+    topHeadlineItems: List<TopHeadlineItem>,
+    onNewsClick: (TopHeadlineItem) -> Unit,
     onSorterDate: (SorterDate) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -141,7 +141,7 @@ private fun TopHeadlineList(
             verticalArrangement = Arrangement.spacedBy(Dimen8),
         ) {
 
-            itemsIndexed(topHeadlines) { index, item ->
+            itemsIndexed(topHeadlineItems) { index, item ->
                 DSNewsCard(
                     modifier = Modifier
                         .height(80.dp)
@@ -198,14 +198,14 @@ fun SorterRow(
 private fun LaunchPadScreenPreview() {
     LaunchPadScreen(
         launchpadResultUiState = LaunchpadResultUiState.Success(
-            topHeadlines = listOf(
-                TopHeadline(
+            topHeadlineItems = listOf(
+                TopHeadlineItem(
                     description = "risus",
                     url = "https://search.yahoo.com/search?p=invidunt",
                     source = Source(id = "finibus", name = "Colette Howell"),
                     author = "jdnfdnif",
                     urlToImage = "sdkdskmd",
-                    publishedAt = "12/ao/20202"
+                    publishedAt = "12/ao/20202", title = "iuvaret", content = null,
                 )
             )
         ),

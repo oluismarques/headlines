@@ -1,13 +1,13 @@
 package com.news.launchpad
 
 import android.os.Parcelable
-import com.news.domain.headlines.TopHeadline
+import com.news.domain.headlines.TopHeadlineItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal sealed interface LaunchpadResultUiState : Parcelable {
     @Parcelize
-    data class Success(val topHeadlines: List<TopHeadline>) : LaunchpadResultUiState
+    data class Success(val topHeadlineItems: List<TopHeadlineItem>) : LaunchpadResultUiState
 
     @Parcelize
     data object Error : LaunchpadResultUiState

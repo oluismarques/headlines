@@ -3,6 +3,7 @@ package com.news.headlines.mainscreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.news.domain.headlines.TopHeadlineItem
 import com.news.launchpad.ROUTE_LAUNCHPAD
 import com.news.launchpad.launchpadScreenGraph
 
@@ -10,7 +11,7 @@ import com.news.launchpad.launchpadScreenGraph
 @Composable
 fun MainScreenNavHost(
     navController: NavHostController,
-    navigateToDetail: (String) -> Unit,
+    navigateToDetail: (TopHeadlineItem) -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -19,6 +20,5 @@ fun MainScreenNavHost(
         launchpadScreenGraph(
             navigateToDetail = navigateToDetail
         )
-
     }
 }
