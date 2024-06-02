@@ -56,4 +56,5 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.material3.android)
+    implementation(project(":presentation:details"))
 }

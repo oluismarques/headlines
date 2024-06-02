@@ -5,10 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.news.domain.headlines.HeadlinesRepository
 import com.news.util.Resource
-import com.news.util.asMutable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -48,10 +45,10 @@ internal class LaunchpadViewModel @Inject constructor(
         viewModelScope.launch {
             if (getState() is LaunchpadResultUiState.Success) {
                 val result = getState() as LaunchpadResultUiState.Success
-               val sortedList=  if (sorterDate == SorterDate.ASC) {
-                    result.topHeadlines.sortedBy { it.publishedAt }
+                val sortedList = if (sorterDate == SorterDate.ASC) {
+                    result.topHeadlineItems.sortedBy { it.publishedAt }
                 } else {
-                    result.topHeadlines.sortedByDescending {
+                    result.topHeadlineItems.sortedByDescending {
                         it.publishedAt
                     }
                 }

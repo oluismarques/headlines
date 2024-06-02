@@ -2,7 +2,7 @@ package com.news.data.network.model
 
 
 import com.news.domain.headlines.Source
-import com.news.domain.headlines.TopHeadline
+import com.news.domain.headlines.TopHeadlineItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.ZonedDateTime
@@ -24,6 +24,8 @@ internal data class ContentHeadlineResponse(
     val url: String?,
     @SerialName("source")
     val sourceHeadlineResponse: SourceHeadlineResponse,
+    @SerialName("content")
+    val content: String?,
 )
 
 @Serializable
@@ -34,14 +36,16 @@ internal data class SourceHeadlineResponse(
     val name: String,
 )
 
-internal fun ContentHeadlineResponse.asDomainModel(): TopHeadline =
-    TopHeadline(
+internal fun ContentHeadlineResponse.asDomainModel(): TopHeadlineItem =
+    TopHeadlineItem(
         author = author,
         description = description.orEmpty(),
         url = url.orEmpty(),
         urlToImage = urlToImage,
         publishedAt = formatDate(publishedAt),
-        source = sourceHeadlineResponse.asDomainModel()
+        source = sourceHeadlineResponse.asDomainModel(),
+        title = title,
+        content = content
     )
 
 private fun formatDate(date: String): String {
