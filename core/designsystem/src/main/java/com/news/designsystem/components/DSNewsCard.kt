@@ -29,7 +29,8 @@ import com.news.designsystem.theme.TextSmall
 @Composable
 fun DSNewsCard(
     modifier: Modifier = Modifier,
-    name: String,
+    title: String,
+    source: String,
     releaseDate: String,
     onCardClick: () -> Unit,
     imageUrl: String?,
@@ -56,10 +57,18 @@ fun DSNewsCard(
                 verticalArrangement = Arrangement.spacedBy(Dimen8)
             ) {
                 Text(
-                    text = name,
-                    style = NewsTypography.titleSmall,
+                    text = source,
+                    fontSize = TextSmall,
+                    style = NewsTypography.labelSmall,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
+                )
+
+                Text(
+                    text = title,
+                    style = NewsTypography.titleSmall,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
                 )
 
                 Text(
@@ -80,7 +89,8 @@ private fun DSMovieCardPreview() {
     NewsTheme {
         DSNewsCard(
             modifier = Modifier.height(140.dp),
-            name = "Suzie",
+            title = "Suzie",
+            source = "sdasd",
             onCardClick = { -> },
             imageUrl = null,
             imageWidth = 120.dp,
