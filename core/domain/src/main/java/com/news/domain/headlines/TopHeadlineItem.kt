@@ -7,16 +7,10 @@ import kotlinx.parcelize.Parcelize
 data class TopHeadlineItem(
     val description: String,
     val url: String,
-    val source: Source,
+    val source: SourceItem,
     val author: String?,
     val urlToImage: String?,
     val publishedAt: String,
     val title: String,
     val content: String?,
-) : Parcelable
-
-@Parcelize
-data class Source(
-    val id: String?,
-    val name: String,
 ) : Parcelable

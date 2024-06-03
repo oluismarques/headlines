@@ -1,4 +1,4 @@
-package com.news.data.network.model
+package com.news.data.network.model.headlines
 
 
 import kotlinx.serialization.SerialName

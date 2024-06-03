@@ -1,7 +1,7 @@
-package com.news.data.network.model
+package com.news.data.network.model.headlines
 
 
-import com.news.domain.headlines.Source
+import com.news.domain.headlines.SourceItem
 import com.news.domain.headlines.TopHeadlineItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -57,8 +57,8 @@ private fun formatDate(date: String): String {
     return formattedTime
 }
 
-private fun SourceHeadlineResponse.asDomainModel(): Source =
-    Source(
+private fun SourceHeadlineResponse.asDomainModel(): SourceItem =
+    SourceItem(
         name = name,
         id = id.orEmpty()
     )

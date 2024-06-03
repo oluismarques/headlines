@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
 import com.news.designsystem.theme.NewsTheme
 import com.news.util.BiometricAuth
+import com.news.util.FlavorChecker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class MainActivity : FragmentActivity() {
                 val isBiometricSupported by remember { mutableStateOf(biometricAuth.canAuthenticate()) }
 
                 LaunchedEffect(Unit) {
-                    if (isBiometricSupported) {
+                    if (isBiometricSupported && FlavorChecker.isFullFlavor()) {
                         biometricAuth.authenticate(
                             onSuccess = { isAuthenticated = true },
                             onFailure = { /* Handle failure if necessary */ }

@@ -37,6 +37,18 @@ android {
         }
     }
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "version"
+        }
+        create("full"){
+            dimension = "version"
+        }
+    }
+
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -58,6 +70,7 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
+    implementation(libs.androidx.paging.common)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

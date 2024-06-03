@@ -7,6 +7,19 @@ plugins {
 android {
     namespace = "com.news.feature.details"
 
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "version"
+        }
+        create("full"){
+            dimension = "version"
+        }
+    }
+
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

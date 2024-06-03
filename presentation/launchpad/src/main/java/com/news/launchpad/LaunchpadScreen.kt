@@ -1,5 +1,6 @@
 package com.news.launchpad
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,40 +9,55 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.news.designsystem.components.DSNewsCard
 import com.news.designsystem.components.DSTopBar
 import com.news.designsystem.components.ThemePreviews
 import com.news.designsystem.theme.DSBlue
-import com.news.designsystem.theme.DSGray50
 import com.news.designsystem.theme.Dimen12
 import com.news.designsystem.theme.Dimen8
-import com.news.domain.headlines.Source
+import com.news.domain.headlines.SourceItem
 import com.news.domain.headlines.TopHeadlineItem
 import com.news.feature.launchpad.R
+import com.news.util.FlavorChecker
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
 internal fun LaunchPadScreen(
-    launchpadResultUiState: LaunchpadResultUiState,
-    onSorterDate: (SorterDate) -> Unit,
+    sources: List<SourceItem>,
     navigateToDetail: (TopHeadlineItem) -> Unit,
+    onSelectedSource: (SourceItem) -> Unit,
+    pagingState: LazyPagingItems<TopHeadlineItem>,
 ) {
+    var selectedItem by rememberSaveable { mutableStateOf<SourceItem?>(null) }
+
     Column {
         DSTopBar(
             modifier = Modifier.padding(horizontal = Dimen12),
@@ -49,30 +65,83 @@ internal fun LaunchPadScreen(
             title = stringResource(R.string.top_headlines_top_bar_title),
         )
 
+        if (FlavorChecker.isFullFlavor()) {
+            Spinner(sources = sources, onSelectedSource = {
+                onSelectedSource(it)
+                selectedItem = it
+            }, title = selectedItem?.name ?: "BBC News")
+        }
+
         NewsCollection(
-            uiState = launchpadResultUiState,
             navigateToDetail = navigateToDetail,
-            onSorterDate = onSorterDate
+            source = selectedItem?.name ?: "BBC News",
+            pagingState = pagingState
         )
     }
 }
 
 @Composable
-private fun NewsCollection(
-    uiState: LaunchpadResultUiState,
-    navigateToDetail: (TopHeadlineItem) -> Unit,
-    onSorterDate: (SorterDate) -> Unit,
+private fun Spinner(
+    title: String,
+    sources: List<SourceItem>,
+    onSelectedSource: (SourceItem) -> Unit,
 ) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .padding(Dimen8)
+            .background(DSBlue)
+            .wrapContentSize()
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            IconButton(modifier = Modifier.fillMaxWidth(), onClick = { expanded = !expanded }) {
+                Row {
+                    Text(text = title)
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "More"
+                    )
+                }
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                sources.forEach { item ->
+                    DropdownMenuItem(
+                        onClick = {
+                            expanded = false
+                            onSelectedSource(item)
+                        },
+                        text = {
+                            Text(text = item.name)
+                        })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun NewsCollection(
+    navigateToDetail: (TopHeadlineItem) -> Unit,
+    source: String,
+    pagingState: LazyPagingItems<TopHeadlineItem>,
+) {
+    val listState = rememberLazyListState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = Dimen8, top = Dimen8, bottom = Dimen8),
         verticalArrangement = Arrangement.Top
     ) {
-
-
-        when (uiState) {
-            LaunchpadResultUiState.Empty -> {
+        when {
+            pagingState.itemCount == 0 || pagingState.loadState.refresh is LoadState.Error -> {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -86,21 +155,18 @@ private fun NewsCollection(
                 }
             }
 
-            LaunchpadResultUiState.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        modifier = Modifier.testTag("error_tag"),
-                        text = stringResource(R.string.top_headlines_error_message)
-                    )
-                }
+            pagingState.loadState.refresh is LoadState.Loading -> Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(modifier = Modifier.testTag("loading_tag"))
+                LaunchedEffect(true) { listState.scrollToItem(0) }
+
             }
 
-            LaunchpadResultUiState.Loading -> Box(
+            pagingState.loadState.append is LoadState.Loading -> Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp),
@@ -109,14 +175,15 @@ private fun NewsCollection(
                 CircularProgressIndicator(modifier = Modifier.testTag("loading_tag"))
             }
 
-            is LaunchpadResultUiState.Success -> {
+            else -> {
                 TopHeadlineList(
-                    modifier = Modifier.wrapContentHeight(),
-                    topHeadlineItems = uiState.topHeadlineItems,
-                    onSorterDate = onSorterDate,
                     onNewsClick = {
-                        navigateToDetail.invoke(it) 
-                    })
+                        navigateToDetail.invoke(it)
+                    },
+                    modifier = Modifier.wrapContentHeight(),
+                    source = source,
+                    pagingState = pagingState
+                )
             }
         }
     }
@@ -124,71 +191,38 @@ private fun NewsCollection(
 
 @Composable
 private fun TopHeadlineList(
-    topHeadlineItems: List<TopHeadlineItem>,
     onNewsClick: (TopHeadlineItem) -> Unit,
-    onSorterDate: (SorterDate) -> Unit,
     modifier: Modifier = Modifier,
+    source: String,
+    pagingState: LazyPagingItems<TopHeadlineItem>,
 ) {
     Column {
-        Text(text = stringResource(id = R.string.top_headlines))
-
-        SorterRow(
-            onSorterDate = onSorterDate,
-        )
+        Text(text = stringResource(id = R.string.top_headlines, source))
 
         LazyColumn(
             modifier = modifier.wrapContentHeight(),
             verticalArrangement = Arrangement.spacedBy(Dimen8),
         ) {
 
-            itemsIndexed(topHeadlineItems) { index, item ->
+            items(pagingState.itemCount) { index ->
+                val item = pagingState[index]
+
                 DSNewsCard(
                     modifier = Modifier
-                        .height(80.dp)
+                        .height(100.dp)
                         .padding(end = Dimen8)
                         .testTag("movie_card_tag"),
-                    name = item.source.name,
-                    onCardClick = { onNewsClick.invoke(item) },
-                    imageUrl = item.urlToImage,
-                    releaseDate = item.publishedAt
+                    title = item?.title.orEmpty(),
+                    onCardClick = {
+                        if (item != null) {
+                            onNewsClick.invoke(item)
+                        }
+                    },
+                    imageUrl = item?.urlToImage,
+                    source = item?.source?.name.orEmpty(),
+                    releaseDate = item?.publishedAt.orEmpty()
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun SorterRow(
-    onSorterDate: (SorterDate) -> Unit,
-) {
-    // State to keep track of the current sort order
-    var currentSortOrder by remember { mutableStateOf(SorterDate.ASC) }
-
-    val selectedColor: Color = DSBlue
-    val notSelectedColor: Color = DSGray50
-
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        TextButton(
-            onClick = {
-                currentSortOrder = SorterDate.ASC
-                onSorterDate(currentSortOrder)
-            },
-            colors = androidx.compose.material3.ButtonDefaults.textButtonColors(
-                contentColor = if (currentSortOrder == SorterDate.ASC) selectedColor else notSelectedColor
-            )
-        ) {
-            Text(text = stringResource(R.string.top_headlines_asc_date))
-        }
-        TextButton(
-            onClick = {
-                currentSortOrder = SorterDate.DESC
-                onSorterDate(currentSortOrder)
-            },
-            colors = androidx.compose.material3.ButtonDefaults.textButtonColors(
-                contentColor = if (currentSortOrder == SorterDate.DESC) selectedColor else notSelectedColor
-            )
-        ) {
-            Text(text = stringResource(R.string.top_headlines_desc_date))
         }
     }
 }
@@ -196,20 +230,12 @@ fun SorterRow(
 @ThemePreviews
 @Composable
 private fun LaunchPadScreenPreview() {
+    val pagingData = MutableStateFlow(PagingData.empty<TopHeadlineItem>())
+
     LaunchPadScreen(
-        launchpadResultUiState = LaunchpadResultUiState.Success(
-            topHeadlineItems = listOf(
-                TopHeadlineItem(
-                    description = "risus",
-                    url = "https://search.yahoo.com/search?p=invidunt",
-                    source = Source(id = "finibus", name = "Colette Howell"),
-                    author = "jdnfdnif",
-                    urlToImage = "sdkdskmd",
-                    publishedAt = "12/ao/20202", title = "iuvaret", content = null,
-                )
-            )
-        ),
-        onSorterDate = {},
-        navigateToDetail = {}
+        sources = listOf(),
+        navigateToDetail = {},
+        onSelectedSource = {},
+        pagingState = pagingData.collectAsLazyPagingItems()
     )
 }

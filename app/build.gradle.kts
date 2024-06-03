@@ -33,6 +33,17 @@ android {
         )
     }
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "version"
+        }
+        create("full"){
+            dimension = "version"
+        }
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
