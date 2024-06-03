@@ -42,10 +42,12 @@ android {
 
 dependencies {
     implementation(projects.presentation.launchpad)
+    implementation(projects.presentation.details)
 
     implementation(projects.core.domain)
     implementation(projects.core.designsystem)
     implementation(projects.core.data)
+    implementation(projects.core.util)
 
     implementation(libs.coil.kt)
     implementation(libs.androidx.activity.compose)
@@ -56,5 +58,5 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.material3.android)
-    implementation(project(":presentation:details"))
+
 }

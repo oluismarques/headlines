@@ -22,7 +22,6 @@ internal class LaunchpadViewModel @Inject constructor(
         initialValue = LaunchpadResultUiState.Loading
     )
 
-
     init {
         getTopHeadlines()
     }
