@@ -34,6 +34,7 @@ androidx-paging-compose = "3.2.1"
 kotlinx-datetime = "0.5.0"
 uiTestAndroid = "1.6.3"
 material3Android = "1.2.1"
+biometricKtxVersion = "1.1.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
@@ -80,8 +81,7 @@ androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "li
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-compose" }
-
-
+biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometricKtxVersion" }
 
 
 # Dependencies of the included build-logic
