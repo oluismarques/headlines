@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-fun <T : Any> fetchMovies(
+fun <T : Any> fetchNews(
     ioDispatcher: CoroutineDispatcher,
     apiCall: suspend () -> T
 ): Flow<Resource<T>> = flow {

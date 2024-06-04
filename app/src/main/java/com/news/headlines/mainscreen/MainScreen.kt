@@ -36,6 +36,7 @@ import com.news.launchpad.ROUTE_LAUNCHPAD
 import com.news.designsystem.theme.DSGray10
 import com.news.designsystem.theme.Dimen1
 import com.news.designsystem.theme.Dimen56
+import com.news.domain.headlines.TopHeadlineItem
 
 data class BottomNavItem(
     val selectedIcon: ImageVector,
@@ -46,7 +47,7 @@ data class BottomNavItem(
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
-    navigateToDetail: (Int) -> Unit,
+    navigateToDetail: (TopHeadlineItem) -> Unit,
 ) {
     Scaffold(
         bottomBar = {

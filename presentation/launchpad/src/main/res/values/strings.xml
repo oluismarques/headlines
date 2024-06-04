@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">launchpad</string>
+    <string name="top_headlines_top_bar_title">News Provider</string>
+    <string name="top_headlines">Top Headlines for %s</string>
+    <string name="top_headlines_empty_results">No results to show</string>
+    <string name="top_headlines_error_message">Something went wrong</string>
+    <string name="top_headlines_asc_date">Asc date</string>
+    <string name="top_headlines_desc_date">Des date</string>
+
 </resources>

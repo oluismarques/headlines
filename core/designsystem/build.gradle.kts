@@ -10,6 +10,17 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "version"
+        }
+        create("full"){
+            dimension = "version"
+        }
+    }
 }
 
 dependencies {

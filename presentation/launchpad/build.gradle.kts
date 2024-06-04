@@ -7,23 +7,33 @@ plugins {
 android {
     namespace = "com.news.feature.launchpad"
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "version"
+        }
+        create("full"){
+            dimension = "version"
+        }
+    }
+
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
         }
     }
-
 }
 
 dependencies {
     implementation(projects.core.util)
-    
+
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.compose.ui.test)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    implementation(libs.androidx.compose.ui.test)
 }
