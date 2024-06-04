@@ -211,7 +211,7 @@ private fun TopHeadlineList(
                     modifier = Modifier
                         .height(100.dp)
                         .padding(end = Dimen8)
-                        .testTag("movie_card_tag"),
+                        .testTag("news_card_tag"),
                     title = item?.title.orEmpty(),
                     onCardClick = {
                         if (item != null) {

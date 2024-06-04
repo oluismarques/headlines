@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,6 +51,7 @@ fun DetailScreen(
         )
 
         Text(
+            modifier = Modifier.testTag("title_tag"),
             text = title.orEmpty(),
             style = NewsTypography.titleMedium,
         )
@@ -60,7 +62,7 @@ fun DetailScreen(
         )
 
         Text(
-            text = author.orEmpty().ifEmpty { "No author found" },
+            text = author.orEmpty().ifEmpty { stringResource(R.string.details_no_author_found) },
             style = NewsTypography.titleSmall,
         )
 
@@ -72,7 +74,6 @@ fun DetailScreen(
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
-                //  .height(150.dp)
                 .padding(top = 8.dp),
             contentScale = ContentScale.Crop,
             model = ImageRequest.Builder(LocalContext.current)
