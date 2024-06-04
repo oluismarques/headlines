@@ -1,3 +1,4 @@
 <resources>
     <string name="details_top_bar_title">News</string>
+    <string name="details_no_author_found">No author found</string>
 </resources>

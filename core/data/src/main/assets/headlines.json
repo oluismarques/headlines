@@ -1,0 +1,84 @@
+{
+  "status": "ok",
+  "totalResults": 10,
+  "articles": [
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "US has 'every expectation' Israel will expect ceasefire proposal",
+      "description": "The White House believes Hamas has been weakened to a point that it cannot repeat the 7 October attack.",
+      "url": "https://www.bbc.co.uk/news/articles/cd11l590qqwo",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/be3c/live/2a45fdb0-20ee-11ef-a3ab-e73c00cc3104.jpg",
+      "publishedAt": "2024-06-03T09:37:19.227642Z",
+      "content": "The US has \"every expectation\" Israel will accept a ceasefire proposal that would begin with a six-week cessation of hostilities in Gaza if Hamas takes the deal, a senior White House official has sai… [+3929 chars]"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "'Russia now is like 1984': Inside a Russian dystopian library",
+      "description": "Deep in Putin's Russia, Ivanovo's George Orwell library is still lending books on totalitarianism.",
+      "url": "https://www.bbc.co.uk/news/articles/ckrr1k1xl0lo",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/0dd4/live/82b5d620-1dd1-11ef-80aa-699d54c46324.jpg",
+      "publishedAt": "2024-06-03T09:07:20.7430964Z",
+      "content": "Inside, the tiny library offers a selection of books on dystopian worlds and the dangers of totalitarianism. \r\nThere are multiple copies of Orwells classic novel Nineteen Eighty-Four; the story in wh… [+1193 chars]"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "UK's MI6 recruited Chinese state workers as spies, says China",
+      "description": "Beijing says the UK's MI6 took advantage of Mr Wang's \"strong desire for money\".",
+      "url": "https://www.bbc.co.uk/news/articles/cd11364g90mo",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/4e5c/live/377e2eb0-2163-11ef-a744-b7b236bd358e.jpg",
+      "publishedAt": "2024-06-03T07:52:14.6189367Z",
+      "content": "China has accused UK's Secret Intelligence Service MI6 of recruiting Chinese state employees as spies.\r\nIn a post on its official WeChat channel, China's Ministry of State Security said MI6 operative… [+2447 chars]"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "New York couple pull up safe containing $100,000 from lake",
+      "description": "James Kane and Barbie Agostini told US media that they found the safe stuffed full of $100 bills.",
+      "url": "https://www.bbc.co.uk/news/articles/cx99v2r812po",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/178d/live/4a6f39f0-2123-11ef-8537-a190f3d775be.jpg",
+      "publishedAt": "2024-06-03T06:52:14.2122075Z",
+      "content": "A couple of \"magnet fishing\" enthusiasts say they pulled up a safe containing an estimated $100,000 (£78,000) from a New York lake. \r\nJames Kane and Barbie Agostini threw a rope with a magnet into a … [+1109 chars]"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "Missing Cryptoqueen Ruja Ignatova’s links to Bulgaria underworld",
+      "description": "The BBC investigates Ruja Ignatova’s close ties to a suspected organised crime boss.",
+      "url": "https://www.bbc.co.uk/news/articles/c2llvlx2ez9o",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/aeb1/live/83273320-1e61-11ef-a13a-0b8c563da930.jpg",
+      "publishedAt": "2024-06-03T05:52:16.3211694Z",
+      "content": "When we interviewed Mr Schneider at his home in France, he was under house arrest, awaiting extradition to the US in connection to the OneCoin scam. He was not, however, prepared to reveal names.\r\nI'… [+2508 chars]"
+    },
+    {
+      "source": {
+        "id": "bbc-news",
+        "name": "BBC News"
+      },
+      "author": "BBC News",
+      "title": "Julian Nagelsmann: German football coach condemns broadcaster's 'racist' survey",
+      "description": "Julian Nagelsmann condemned the poll, which asked if people wanted more white players on the German team.",
+      "url": "https://www.bbc.co.uk/news/articles/cw4437m0gkpo",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/29b8/live/23cf3b00-213d-11ef-b7b2-ad1f6910b62b.jpg",
+      "publishedAt": "2024-06-03T01:52:13.9991614Z",
+      "content": "\"We have to ask what are we doing at the moment? We in Germany are doing very, very well, and when we say something like that, I think its crazy how we turn a blind eye and simply block out such thin… [+1549 chars]"
+    }
+  ]
+}

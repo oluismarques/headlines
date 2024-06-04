@@ -52,6 +52,5 @@ internal class LaunchpadViewModel @Inject constructor(
                     pagingState.asMutable().emit(result)
                 }
         }
-
     }
 }
